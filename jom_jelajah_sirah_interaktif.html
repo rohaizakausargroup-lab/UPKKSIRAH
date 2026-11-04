@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jom Jelajah Sirah — Tahun 3, 4 & 5</title>
+<style>
+:root{--ink:#213047;--muted:#627086;--bg:#f6f7fb;--card:#fff;--purple:#6556c8;--purple2:#eeeaff;--teal:#168b83;--gold:#f2b84b;--line:#e4e8f0;--good:#16845d;--bad:#c14e54}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(120deg,#5145b7,#786be0 60%,#4aa99c);color:#fff;padding:30px 18px 34px}
+.hero{max-width:1000px;margin:auto}.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;opacity:.85}
+h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.1;margin:8px 0 10px}.hero p{max-width:680px;margin:0;color:#f0efff}
+main{max-width:1000px;margin:-16px auto 48px;padding:0 16px}.panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 24px #24304b0a;margin-bottom:16px}
+.grade-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.grade-btn{border:1px solid var(--line);border-radius:14px;padding:13px 8px;background:#fff;color:var(--ink);font-weight:800;cursor:pointer}
+.grade-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.toprow{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+h2{font-size:1.35rem;margin:0 0 6px}h3{margin:0 0 8px;font-size:1.06rem}.muted{color:var(--muted);font-size:.93rem}
+.pill{display:inline-block;border-radius:99px;background:var(--purple2);color:#5145b7;padding:4px 10px;font-size:.78rem;font-weight:800}
+.lesson-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.lesson{border:1px solid var(--line);border-radius:15px;padding:15px;background:linear-gradient(150deg,#fff,#fbfbff)}
+.lesson .emoji{font-size:1.5rem}.lesson p{margin:6px 0 0;color:#46546a;font-size:.94rem}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;cursor:pointer;transition:transform .12s,opacity .12s}button:active{transform:scale(.98)}
+.primary,.secondary,.choice{border:0;border-radius:12px;padding:11px 15px;font-weight:750}
+.primary{background:var(--purple);color:#fff}.secondary{background:#edf0f7;color:#334158}.choice{display:block;width:100%;text-align:left;background:#f7f8fc;border:1px solid var(--line);margin:8px 0;padding:12px 14px;color:var(--ink)}
+.choice:hover{border-color:#9a91e6;background:#f4f1ff}.choice.correct{background:#e4f7ee;border-color:#70c6a0}.choice.wrong{background:#fff0f0;border-color:#e4a1a5}
+.progress{height:8px;background:#e9ecf4;border-radius:99px;overflow:hidden;margin:12px 0}.progress>div{height:100%;background:linear-gradient(90deg,var(--purple),var(--teal));width:0%;transition:width .25s}
+.quiz-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;gap:10px}
+#feedback{padding:12px;border-radius:12px;margin-top:12px;display:none}#feedback.show{display:block}#feedback.good{background:#e7f8ef;color:#176746}#feedback.bad{background:#fff0f0;color:#943b40}
+#question{font-size:1.15rem;font-weight:800;margin:14px 0}
+.hidden{display:none!important}.flashcard{min-height:140px;border:2px dashed #b7b0ed;border-radius:16px;background:#f8f6ff;padding:20px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.1rem;font-weight:750;cursor:pointer}
+.small-note{font-size:.82rem;color:var(--muted);margin-top:18px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 16px 28px}
+@media(max-width:650px){.lesson-grid{grid-template-columns:1fr}.panel{padding:16px}.grade-tabs{gap:6px}.grade-btn{font-size:.9rem;padding:11px 5px}}
+</style>
+</head>
+<body>
+<header><div class="hero"><div class="eyebrow">Belajar • Ingat • Jawab</div><h1>🌙 Jom Jelajah Sirah!</h1><p>Teman belajar Sirah Tahun 3, 4 dan 5 — baca nota ringkas, pusing kad imbas dan jawab kuiz untuk kumpul bintang.</p></div></header>
+<main>
+  <section class="panel">
+    <div class="toprow"><div><h2>Pilih tahun pembelajaran</h2><div class="muted">Pilih tahap untuk lihat nota dan latihan yang sesuai.</div></div><span class="pill">⭐ <span id="totalStars">0</span> bintang</span></div>
+    <div class="grade-tabs" role="tablist" aria-label="Pilih tahun">
+      <button class="grade-btn active" data-grade="3">Tahun 3 🌱</button><button class="grade-btn" data-grade="4">Tahun 4 🧭</button><button class="grade-btn" data-grade="5">Tahun 5 🏅</button>
+    </div>
+    <div class="toprow"><div><h2 id="gradeTitle">Tahun 3: Asas Sirah</h2><div class="muted" id="gradeIntro"></div></div><span class="pill" id="lessonCount">4 topik</span></div>
+    <div class="lesson-grid" id="lessons"></div>
+    <div class="small-note">Nota disusun sebagai ulang kaji ringkas berdasarkan tema yang kelihatan dalam buku/PDF yang diberikan. Semak semula ejaan, tarikh dan butiran khusus dengan buku sekolah anak.</div>
+  </section>
+
+  <section class="panel" id="flashPanel">
+    <div class="toprow"><div><h2>🃏 Kad imbas</h2><div class="muted">Cuba jawab dahulu, kemudian tekan kad untuk melihat jawapan.</div></div><span class="pill" id="flashCount">Kad 1</span></div>
+    <div style="height:12px"></div><div class="flashcard" id="flashcard" tabindex="0" role="button" aria-label="Pusing kad imbas">Tekan untuk mula</div>
+    <div class="actions"><button class="secondary" id="prevFlash">← Sebelum</button><button class="primary" id="flipFlash">Pusing kad</button><button class="secondary" id="nextFlash">Seterusnya →</button></div>
+  </section>
+
+  <section class="panel" id="quizPanel">
+    <div class="toprow"><div><h2>🎯 Cabaran kuiz</h2><div class="muted">Pilih jawapan yang paling tepat. Setiap jawapan betul dapat satu bintang!</div></div><span class="pill" id="scorePill">Skor 0/0</span></div>
+    <div class="progress"><div id="progressFill"></div></div>
+    <div class="quiz-meta"><span id="questionNumber">Soalan 1</span><span id="answeredLabel">Belum dijawab</span></div>
+    <div id="question">Tekan “Mula kuiz” apabila bersedia.</div>
+    <div id="choices"></div><div id="feedback" role="status" aria-live="polite"></div>
+    <div class="actions"><button class="primary" id="startQuiz">Mula kuiz ▶</button><button class="secondary hidden" id="nextQuestion">Soalan seterusnya →</button><button class="secondary" id="resetQuiz">Ulang semula</button></div>
+    <div id="result" class="hidden" style="margin-top:16px;padding:16px;background:#f2f0ff;border-radius:14px"></div>
+  </section>
+</main>
+<footer>🌟 Belajar sedikit demi sedikit. Yang penting berusaha, berakhlak baik dan mengambil pengajaran daripada sirah.</footer>
+<script>
+const content={
+3:{title:"Tahun 3: Asas Sirah",intro:"Kenali permulaan wahyu, dakwah Rasulullah SAW dan sahabat awal Islam.",lessons:[
+["📖","Wahyu pertama","Wahyu pertama diturunkan kepada Nabi Muhammad SAW di Gua Hira'. Surah al-'Alaq ialah surah yang berkaitan dengan permulaan wahyu."],
+["🤝","Dakwah secara rahsia","Pada peringkat awal, Rasulullah SAW menyampaikan dakwah secara rahsia. Baginda mengajak orang terdekat mengenal dan menyembah Allah."],
+["📣","Dakwah secara terang-terangan","Dakwah kemudian disampaikan secara terbuka. Rasulullah SAW tetap sabar ketika menghadapi tentangan."],
+["💛","Sahabat awal Islam","Antara sahabat awal yang sering dipelajari ialah Khadijah binti Khuwailid, Abu Bakar as-Siddiq, Ali bin Abi Talib dan Zaid bin Harithah."]
+],cards:[
+["Di manakah wahyu pertama diterima?","Di Gua Hira'."],["Surah apakah berkaitan dengan permulaan wahyu?","Surah al-'Alaq."],["Bagaimanakah dakwah dilakukan pada peringkat awal?","Secara rahsia."],["Nyatakan satu sifat yang boleh dicontohi daripada Rasulullah SAW.","Sabar dan terus menyampaikan kebenaran."],["Siapakah isteri Rasulullah SAW yang menerima Islam pada peringkat awal?","Khadijah binti Khuwailid."]
+],quiz:[
+["Wahyu pertama diterima oleh Rasulullah SAW di…",["Gua Hira'","Gua Thur","Masjid Quba","Bukit Uhud"],0,"Gua Hira' ialah tempat Rasulullah SAW menerima wahyu pertama."],
+["Surah yang berkaitan dengan permulaan wahyu ialah…",["Surah al-Fil","Surah al-'Alaq","Surah al-Kauthar","Surah al-Masad"],1,"Surah al-'Alaq berkaitan dengan permulaan wahyu."],
+["Pada peringkat awal, dakwah Rasulullah SAW dilakukan secara…",["Terbuka sahaja","Rahsia","Melalui peperangan","Di Madinah sahaja"],1,"Dakwah bermula secara rahsia sebelum disampaikan secara terbuka."],
+["Antara berikut, siapakah isteri Rasulullah SAW?",["Khadijah binti Khuwailid","Asma' binti Abu Bakar","Halimatus Sa'diyah","Fatimah binti Asad"],0,"Khadijah binti Khuwailid ialah isteri Rasulullah SAW dan antara yang awal beriman."],
+["Apakah sikap yang patut dicontohi ketika menghadapi kesukaran?",["Putus asa","Membalas dengan kasar","Sabar","Mengejek orang"],2,"Sirah mengajar kita supaya sabar dan berakhlak baik."]
+]},
+4:{title:"Tahun 4: Dakwah & Hijrah",intro:"Ulang kaji usaha dakwah, penghijrahan dan pembinaan masyarakat Islam.",lessons:[
+["🕊️","Hijrah ke Habsyah","Sebahagian orang Islam berhijrah ke Habsyah untuk mencari tempat yang lebih aman daripada penindasan."],
+["🧭","Hijrah ke Madinah","Hijrah Rasulullah SAW ke Madinah merupakan peristiwa penting dalam perkembangan masyarakat Islam."],
+["🕌","Masjid Quba'","Masjid Quba' dikaitkan dengan perjalanan hijrah Rasulullah SAW dan pembinaan tempat ibadah masyarakat Islam."],
+["🤲","Muhajirin dan Ansar","Muhajirin ialah orang Islam yang berhijrah dari Makkah. Ansar ialah penduduk Madinah yang membantu saudara Islam yang berhijrah."]
+],cards:[
+["Mengapakah sebahagian orang Islam berhijrah ke Habsyah?","Untuk mencari tempat yang lebih aman daripada penindasan."],["Siapakah Muhajirin?","Orang Islam yang berhijrah dari Makkah."],["Siapakah Ansar?","Penduduk Madinah yang membantu orang Islam yang berhijrah."],["Apakah nama masjid yang dikaitkan dengan persinggahan Rasulullah SAW ketika hijrah?","Masjid Quba'."],["Apakah nilai yang ditunjukkan oleh Ansar?","Sikap membantu, persaudaraan dan kemurahan hati."]
+],quiz:[
+["Sebahagian orang Islam berhijrah ke Habsyah untuk…",["Mencari tempat yang lebih aman","Membina Kaabah","Menakluk Rom","Berniaga di Taif sahaja"],0,"Hijrah ke Habsyah membantu orang Islam mencari keselamatan daripada penindasan."],
+["Orang Islam yang berhijrah dari Makkah dikenali sebagai…",["Ansar","Muhajirin","Quraisy","Tabiin"],1,"Muhajirin ialah orang Islam yang berhijrah dari Makkah."],
+["Penduduk Madinah yang membantu orang Islam yang berhijrah dikenali sebagai…",["Ansar","Muhajirin","Musyrikin","Peniaga"],0,"Ansar membantu saudara Islam yang datang berhijrah."],
+["Masjid yang dikaitkan dengan perjalanan hijrah Rasulullah SAW ialah…",["Masjid Quba'","Masjid al-Aqsa sahaja","Masjidil Haram sahaja","Masjid Qiblatain sahaja"],0,"Masjid Quba' dikaitkan dengan perjalanan hijrah Rasulullah SAW."],
+["Apakah pengajaran daripada sikap Ansar?",["Mementingkan diri","Tidak berkongsi","Membantu orang lain","Mengejek pendatang"],2,"Ansar menjadi contoh persaudaraan dan sikap suka membantu."]
+]},
+5:{title:"Tahun 5: Peristiwa Penting",intro:"Kenali beberapa peristiwa besar dalam sirah dan pengajaran daripadanya.",lessons:[
+["⚔️","Perang Badar","Perang Badar berlaku pada tahun 2 Hijrah. Dalam bahan ulang kaji, pasukan Muslimin ditunjukkan berjumlah kira-kira 313 orang."],
+["⛰️","Perang Uhud","Perang Uhud berlaku berhampiran Bukit Uhud. Peristiwa ini mengajar kepentingan mematuhi arahan dan kekal berdisiplin."],
+["🛡️","Perang Khandaq","Khandaq bermaksud parit. Strategi menggali parit digunakan untuk mempertahankan Madinah."],
+["🌿","Pengajaran daripada sirah","Antara pengajaran utama ialah taat kepada arahan yang benar, bekerjasama, berani dan bertawakal kepada Allah."]
+],cards:[
+["Pada tahun berapakah Perang Badar berlaku?","Tahun 2 Hijrah."],["Berapakah jumlah pasukan Muslimin yang ditunjukkan dalam bahan Perang Badar?","Kira-kira 313 orang."],["Perang Uhud berlaku berhampiran bukit apa?","Bukit Uhud."],["Apakah maksud Khandaq?","Parit."],["Nyatakan satu pengajaran daripada Perang Uhud.","Mematuhi arahan dan menjaga disiplin."]
+],quiz:[
+["Perang Badar berlaku pada tahun…",["1 Hijrah","2 Hijrah","5 Hijrah","8 Hijrah"],1,"Perang Badar berlaku pada tahun 2 Hijrah."],
+["Bahan pembelajaran menunjukkan pasukan Muslimin dalam Perang Badar kira-kira…",["100 orang","213 orang","313 orang","950 orang"],2,"Bahan yang diberikan menunjukkan pasukan Muslimin berjumlah kira-kira 313 orang."],
+["Perang Uhud dikaitkan dengan…",["Bukit Uhud","Gua Hira'","Gua Thur","Laut Merah"],0,"Perang Uhud berlaku berhampiran Bukit Uhud."],
+["Apakah maksud Khandaq?",["Gunung","Parit","Laluan dagang","Kubu batu"],1,"Khandaq bermaksud parit."],
+["Apakah pengajaran penting daripada Perang Uhud?",["Mengabaikan arahan","Tidak bekerjasama","Mematuhi arahan dan berdisiplin","Bermegah-megah"],2,"Peristiwa Uhud mengingatkan umat Islam tentang kepentingan mematuhi arahan dan disiplin."]
+]}
+};
+let grade=3,flashIndex=0,flipped=false,quiz=[],qIndex=0,score=0,answered=false,totalStars=0;
+const $=id=>document.getElementById(id);
+function renderGrade(){
+ const d=content[grade];$("gradeTitle").textContent=d.title;$("gradeIntro").textContent=d.intro;$("lessonCount").textContent=d.lessons.length+" topik";
+ $("lessons").innerHTML=d.lessons.map(x=>`<article class="lesson"><div class="emoji">${x[0]}</div><h3>${x[1]}</h3><p>${x[2]}</p></article>`).join("");
+ flashIndex=0;flipped=false;renderFlash();resetQuiz();
+ document.querySelectorAll(".grade-btn").forEach(b=>b.classList.toggle("active",+b.dataset.grade===grade));
+}
+function renderFlash(){let c=content[grade].cards[flashIndex];$("flashCount").textContent=`Kad ${flashIndex+1} / ${content[grade].cards.length}`;$("flashcard").textContent=flipped?c[1]:c[0];}
+function flip(){flipped=!flipped;renderFlash()}
+function startQuiz(){quiz=[...content[grade].quiz].sort(()=>Math.random()-.5);qIndex=0;score=0;answered=false;$("result").classList.add("hidden");$("startQuiz").classList.add("hidden");showQuestion()}
+function showQuestion(){
+ if(qIndex>=quiz.length){finishQuiz();return}
+ answered=false;let q=quiz[qIndex];$("questionNumber").textContent=`Soalan ${qIndex+1} daripada ${quiz.length}`;$("answeredLabel").textContent="Pilih satu jawapan";$("question").textContent=q[0];$("choices").innerHTML=q[1].map((v,i)=>`<button class="choice" data-i="${i}">${String.fromCharCode(65+i)}. ${v}</button>`).join("");
+ document.querySelectorAll(".choice").forEach(b=>b.addEventListener("click",()=>answer(+b.dataset.i)));
+ $("feedback").className="";$("feedback").textContent="";$("nextQuestion").classList.add("hidden");$("scorePill").textContent=`Skor ${score}/${qIndex}`;$("progressFill").style.width=(qIndex/quiz.length*100)+"%";
+}
+function answer(i){if(answered)return;answered=true;let q=quiz[qIndex],ok=i===q[2];if(ok){score++;totalStars++;$("totalStars").textContent=totalStars}
+ document.querySelectorAll(".choice").forEach((b,n)=>{b.disabled=true;if(n===q[2])b.classList.add("correct");if(n===i&&!ok)b.classList.add("wrong")});
+ $("feedback").textContent=(ok?"Betul! ⭐ ":"Belum tepat. ")+q[3];$("feedback").className="show "+(ok?"good":"bad");$("answeredLabel").textContent=ok?"Jawapan betul!":"Cuba lagi pada soalan seterusnya";$("scorePill").textContent=`Skor ${score}/${qIndex+1}`;$("progressFill").style.width=((qIndex+1)/quiz.length*100)+"%";$("nextQuestion").classList.remove("hidden");$("nextQuestion").textContent=qIndex===quiz.length-1?"Lihat keputusan 🏁":"Soalan seterusnya →";
+}
+function finishQuiz(){$("question").textContent="Tahniah kerana mencuba!";$("choices").innerHTML="";$("feedback").className="";$("nextQuestion").classList.add("hidden");$("progressFill").style.width="100%";$("scorePill").textContent=`Skor ${score}/${quiz.length}`;$("questionNumber").textContent="Kuiz selesai";$("answeredLabel").textContent="Syabas!";$("result").classList.remove("hidden");let msg=score===quiz.length?"Hebat! Semua jawapan betul!":score>=3?"Bagus! Baca semula nota untuk kukuhkan ingatan.":"Teruskan usaha. Baca nota dan cuba sekali lagi."; $("result").innerHTML=`<h3>🏆 Keputusan: ${score}/${quiz.length}</h3><p>${msg}</p><button class="primary" id="again">Cuba kuiz lagi</button>`;$("again").onclick=startQuiz;$("startQuiz").classList.remove("hidden");$("startQuiz").textContent="Mula semula ▶";}
+function resetQuiz(){$("question").textContent="Tekan “Mula kuiz” apabila bersedia.";$("choices").innerHTML="";$("feedback").className="";$("feedback").textContent="";$("result").classList.add("hidden");$("startQuiz").classList.remove("hidden");$("startQuiz").textContent="Mula kuiz ▶";$("nextQuestion").classList.add("hidden");$("scorePill").textContent="Skor 0/0";$("questionNumber").textContent="Soalan 1";$("answeredLabel").textContent="Belum dijawab";$("progressFill").style.width="0%";}
+document.querySelectorAll(".grade-btn").forEach(b=>b.addEventListener("click",()=>{grade=+b.dataset.grade;renderGrade()}));
+$("flashcard").addEventListener("click",flip);$("flashcard").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip()}});
+$("flipFlash").onclick=flip;$("prevFlash").onclick=()=>{flashIndex=(flashIndex+content[grade].cards.length-1)%content[grade].cards.length;flipped=false;renderFlash()};$("nextFlash").onclick=()=>{flashIndex=(flashIndex+1)%content[grade].cards.length;flipped=false;renderFlash()};
+$("startQuiz").onclick=startQuiz;$("nextQuestion").onclick=()=>{if(answered){qIndex++;showQuestion()}};$("resetQuiz").onclick=resetQuiz;
+renderGrade();
+</script>
+</body>
+</html>
